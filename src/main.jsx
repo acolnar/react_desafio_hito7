@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='react_desafio_hito5'>
       <App />
     </BrowserRouter>
   </StrictMode>,
