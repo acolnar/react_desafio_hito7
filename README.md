@@ -1,3 +1,3 @@
 Deploy:
 
-https://acolnar.github.io/react_desafio_hito5/
+https://acolnar.github.io/react_desafio_hito6/
