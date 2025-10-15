@@ -1,9 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
+import { useCart, formatCLP } from "../context/CartContext";
 const linkBase = "px-3 py-2 rounded-md text-sm font-medium"
 const active = 'underline'
 
 export default function Navbar() {
-    const total = 25000;
+    const {total, items} = useCart();
+    const count = items.reduce((acc, p) => acc + p.qty, 0);
+    //const total = 25000;
     // const token = false;
   return (
     <div>
@@ -15,7 +18,7 @@ export default function Navbar() {
             <NavLink to="/register" className={({isActive}) => `${linkBase} ${isActive ? active : ''}`}>Register</NavLink>
             <NavLink to="/login" className={({isActive}) => `${linkBase} ${isActive ? active : ''}`}>Login</NavLink>
             <NavLink to="/profile" className={({isActive}) => `${linkBase} ${isActive ? active : ''}`}>Profile</NavLink>
-            <Link to="/cart" className="ml-3 px-4 py-2 border rounded-md">Total: ${total}</Link>
+            <Link to="/cart" className="ml-3 px-4 py-2 border rounded-md">{formatCLP(total)} ({count})</Link>
           </div>
         </div>
         </nav>
