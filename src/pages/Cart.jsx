@@ -1,68 +1,29 @@
-import { useCart, formatCLP } from '../context/CartContext.jsx';
+import { useUser } from "../context/UserContext";
 
-export default function Cart() {
-    const {items: cart, increase, decrease, removeFromCart, clearCart, total} = useCart();
+export default function Cart(){
+    const{token} = useUser();
 
-    if (!cart || cart.length === 0){
-        return (
-            <div className='container mt-4'>
-                <h2>Carrito de compras</h2>
-                <p>Tu carrito esta vacio</p>
-            </div>
-        );
-    }
+    const handlePay = () => {
+        if (!token) return;
+        alert("Pago realizado");
+    };
 
-    return (
-        <div className='container mt-4'>
-            <h2>Carrito de compras</h2>
+    return(
+        <main className="max-w-3xl mx-auto p-4">
+            <h2 className="text-xl font-semibold mb-4">Carrito</h2>
 
-            {cart.map((p) => {
-                const qty = p.qty ?? p.count ?? 0;
+            <div className="border rounded-lg p-4 mb-4">Resumen de su compra</div>
 
-                return (
-                    <div
-                        key={p.id}
-                        className='d-flex align-items-center justify-content-between border-bottom py-2'
-                    >
-                        <img src={p.img} alt={p.name} style={{width: "80px"}} />
-                        <h5 className='text-capitalize mb-0'>{p.name}</h5>
+            <button
+                onClick={handlePay}
+                disabled={!token}
+                className={`px-4 py-2 rounded-md text-white ${
+                    !token ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-600 hover:opacity-90 "
+                }`}
+                title={!token ? "Debes iniciar una sesión para pagar" : "Procede al pago"}
+                >Pagar
 
-                        <p className='mb-0'>{formatCLP(p.price ?? 0)}</p>
-
-                        <div className='d-flex align-items-center'>
-                            <button
-                                className='btn btn-sm btn-danger mx-1'
-                                onClick={() => decrease(p.id)}
-                            >-
-                            </button>
-
-                            <span className='mx-1'>{qty}</span>
-
-                            <button
-                                className='btn btn-sm btn-success mx-1'
-                                onClick={() => increase (p.id)}
-                            >+</button>
-                        </div>
-                        <strong className='mb-0'>{formatCLP((p.price ?? 0) * qty)}</strong>
-
-                        <button
-                            className='btn btn-sm btn-outline-secundary ms-2'
-                            onClick={() => removeFromCart(p.id)}
-                        >
-                            Eliminar
-                        </button>
-                    </div>
-                );
-            })}
-
-            <h4 className='mt-3'>Total: {formatCLP(total)}</h4>
-
-            <div className='d-flex gap-2'>
-                <button className='btn btn-outline-dark mt-2' onClick={clearCart}>
-                    Vaciar carrito
-                </button>
-                <button className='btn btn-dark mt-2'>Pagar</button>
-            </div>
-        </div>
+            </button>
+        </main>
     );
 }

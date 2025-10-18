@@ -8,8 +8,9 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
-import { Routes, Route, Navigate } from 'react-router-dom'
-
+import { Routes, Route } from 'react-router-dom'
+import ProtectedRoute from "./components/ProtectedRoute"
+import AuthRedirect from "./components/AuthRedirect"
 
 function App() {
 
@@ -18,13 +19,12 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='/register' element={<Register/>} />
-        <Route path='/login' element={<Login/>} />
+        <Route path='/pizza/:id' element={<Pizza/>} />
         <Route path='/cart' element={<Cart/>} />
-        <Route path='/pizza/p001' element={<Pizza/>} />
-        <Route path='/profile' element={<Profile/>} />
-        <Route path='/404' element={<NotFound/>} />
-        <Route path='/*' element={<Navigate to="/404" replace/>} />
+        <Route path='/login' element={<AuthRedirect><Login/></AuthRedirect>} />
+        <Route path='/register' element={<AuthRedirect><Register/></AuthRedirect>} />
+        <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
+        <Route path='*' element={<div className='p-6'>Página no encontrada</div>}/>
       </Routes>
       <Footer/>
     </>
